@@ -1,48 +1,50 @@
-import React from 'react'
-import { useEffect } from 'react';
-import TextInput from '@/Components/TextInput'
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton'
-import { Head, Link, useForm } from '@inertiajs/react'
+import React from "react";
+import { useEffect } from "react";
+import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
+import { Head, Link, useForm } from "@inertiajs/react";
 
 const Login = ({ status, canResetPassword }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
-        code: '',
-        password: '',
-        remember: '',
+        code: "",
+        password: "",
+        remember: "",
     });
     useEffect(() => {
         return () => {
-            reset('password');
+            reset("password");
         };
     }, []);
 
     const handleOnChange = (event) => {
-        setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+        setData(
+            event.target.name,
+            event.target.type === "checkbox"
+                ? event.target.checked
+                : event.target.value
+        );
     };
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('login'));
+        post(route("login"));
     };
     return (
-        <div className="auth-wrapper">
-            <Head title='Log in'/>
-            <div className="auth-content">
-                <div className="auth-bg">
-                    <span className="r" />
-                    <span className="r s" />
-                    <span className="r s" />
-                    <span className="r" />
+        <div className="hold-transition login-page">
+            <Head title="Login"/>
+            <div className="login-box">
+                <div className="login-logo">
+                    <a href="../../index2.html">
+                        <b>Ryu</b>Gate
+                    </a>
                 </div>
-                <form onSubmit={submit}>
-                    <div className="card">
-                        <div className="card-body text-center">
-                            <div className="mb-4">
-                                <i className="feather icon-unlock auth-icon" />
-                            </div>
-                            <h3 className="mb-4">Login</h3>
+                {/* /.login-logo */}
+                <div className="card">
+                    <div className="card-body login-card-body">
+                        <p className="login-box-msg">Login</p>
+                        <form onSubmit={submit}>
                             <div className="input-group mb-3">
                                 <TextInput
                                     id="code"
@@ -54,9 +56,17 @@ const Login = ({ status, canResetPassword }) => {
                                     isFocused={true}
                                     onChange={handleOnChange}
                                 />
-                                <InputError message={errors.code} className="mt-2" />
+                                <div className="input-group-append">
+                                    <div className="input-group-text">
+                                        <span className="fas fa-envelope" />
+                                    </div>
+                                </div>
                             </div>
-                            <div className="input-group mb-4">
+                            <InputError
+                                message={errors.code}
+                                className="mt-2"
+                            />
+                            <div className="input-group mb-3">
                                 <TextInput
                                     id="password"
                                     type="password"
@@ -66,26 +76,54 @@ const Login = ({ status, canResetPassword }) => {
                                     autoComplete="current-password"
                                     onChange={handleOnChange}
                                 />
-                                <InputError message={errors.password} className="mt-2" />
-                            </div>
-                            <div className="form-group text-left">
-                                <div className="checkbox checkbox-fill d-inline">
-                                    <input type="checkbox" name="remember" id="checkbox-fill-a1" value={data.remember} onChange={handleOnChange} />
-                                    <label htmlFor="checkbox-fill-a1" className="cr"> Remember me</label>
+                                <div className="input-group-append">
+                                    <div className="input-group-text">
+                                        <span className="fas fa-lock" />
+                                    </div>
                                 </div>
                             </div>
-                            <PrimaryButton className='mb-4' disabled={processing}>Login</PrimaryButton>
-                            <p className="mb-2 text-muted">Forgot password? {canResetPassword && (
-                                <Link href={route('password.request')}>
-                                    Reset
-                                </Link>
-                            )}</p>
-                        </div>
+                            <InputError
+                                message={errors.password}
+                                className="mt-2"
+                            />
+                            <div className="row">
+                                <div className="col-8">
+                                    <div className="icheck-primary">
+                                        <input
+                                            type="checkbox"
+                                            id="remember"
+                                            name="remember"
+                                            value={data.remember}
+                                            onChange={handleOnChange}
+                                        />
+                                        <label htmlFor="remember">
+                                            Remember Me
+                                        </label>
+                                    </div>
+                                </div>
+                                {/* /.col */}
+                                <div className="col-4">
+                                    <PrimaryButton
+                                        className="mb-4 btn-block"
+                                        disabled={processing}
+                                    >
+                                        Masuk
+                                    </PrimaryButton>
+                                </div>
+                                {/* /.col */}
+                            </div>
+                        </form>
+                        <p className="mb-1">
+                            <Link href={route("password.request")}>
+                                I forgot my password
+                            </Link>
+                        </p>
                     </div>
-                </form>
+                    {/* /.login-card-body */}
+                </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;
