@@ -36,16 +36,16 @@ const Login = ({ status, canResetPassword }) => {
             <Head title="Login"/>
             <div className="login-box">
                 <div className="login-logo">
-                    <a href="../../index2.html">
+                    <Link href={route('home')}>
                         <b>Ryu</b>Gate
-                    </a>
+                    </Link>
                 </div>
                 {/* /.login-logo */}
                 <div className="card">
                     <div className="card-body login-card-body">
                         <p className="login-box-msg">Login</p>
                         <form onSubmit={submit}>
-                            <div className="input-group mb-3">
+                            <div className="input-group mb-2">
                                 <TextInput
                                     id="code"
                                     type="text"
@@ -58,15 +58,14 @@ const Login = ({ status, canResetPassword }) => {
                                 />
                                 <div className="input-group-append">
                                     <div className="input-group-text">
-                                        <span className="fas fa-envelope" />
+                                        <span className="fas fa-user-alt" />
                                     </div>
                                 </div>
                             </div>
                             <InputError
                                 message={errors.code}
-                                className="mt-2"
                             />
-                            <div className="input-group mb-3">
+                            <div className="input-group mb-2">
                                 <TextInput
                                     id="password"
                                     type="password"
@@ -86,7 +85,7 @@ const Login = ({ status, canResetPassword }) => {
                                 message={errors.password}
                                 className="mt-2"
                             />
-                            <div className="row">
+                            <div className="row mt-3">
                                 <div className="col-8">
                                     <div className="icheck-primary">
                                         <input

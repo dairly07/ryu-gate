@@ -23,7 +23,7 @@ Route::get('/', function () {
     } else {
         return redirect('/login');
     }
-});
+})->name('home');
 
 Route::middleware('auth')->group(function() {
     Route::get('/dashboard', function () {
