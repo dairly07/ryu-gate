@@ -54,7 +54,7 @@ const Login = ({ status, canResetPassword }) => {
                                     isFocused={true}
                                     onChange={handleOnChange}
                                 />
-                                <InputError message={errors.email} className="mt-2" />
+                                <InputError message={errors.code} className="mt-2" />
                             </div>
                             <div className="input-group mb-4">
                                 <TextInput

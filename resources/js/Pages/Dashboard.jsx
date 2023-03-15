@@ -1,7 +1,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import { useEffect } from 'react';
+import '../../css/app.css';
 
 export default function Dashboard(props) {
+    useEffect(() => {
+        console.log(props.auth)
+    }, [])
     return (
         <AuthenticatedLayout
             auth={props.auth}

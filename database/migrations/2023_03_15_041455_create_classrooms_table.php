@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('classrooms', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->char('code', 5);
-            $table->string('name', 100);
-            $table->string('password', 100);
-            $table->rememberToken();
-            $table->enum('role', ['admin', 'petugas']);
+            $table->string('name', 10);
+            $table->string('major', 25);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('classrooms');
     }
 };
