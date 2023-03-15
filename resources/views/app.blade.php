@@ -10,6 +10,13 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        <!-- fontawesome icon -->
+        <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome/css/fontawesome-all.min.css') }}">
+        <!-- animation css -->
+        <link rel="stylesheet" href="{{ asset('assets/plugins/animation/css/animate.min.css') }}">
+        <!-- vendor css -->
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
         <!-- Scripts -->
         @routes
         @viteReactRefresh
@@ -18,5 +25,10 @@
     </head>
     <body class="font-sans antialiased">
         @inertia
+
+        <!-- Required Js -->
+        <script src="{{ asset('assets/js/vendor-all.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
     </body>
 </html>
