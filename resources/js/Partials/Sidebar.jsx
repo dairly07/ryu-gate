@@ -43,7 +43,7 @@ const Sidebar = ({ auth }) => {
                         </li>
                         <li className="nav-header">MASTER DATA</li>
                         <li className="nav-item mb-3">
-                            <Link href="" className="nav-link">
+                            <Link href={route('classrooms.index')} className="nav-link">
                                 <i className="nav-icon fas fa-table" />
                                 <p>Kelas</p>
                             </Link>

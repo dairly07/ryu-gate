@@ -13,4 +13,9 @@ class Classroom extends Model
 
     protected $guarded = ['id'];
     protected $primaryKey = 'id';
+
+    public function student()
+    {
+        return $this->hasMany(Student::class);
+    }
 }
