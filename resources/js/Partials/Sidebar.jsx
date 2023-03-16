@@ -1,9 +1,9 @@
+import { Link } from "@inertiajs/react";
 import React from "react";
 
 const Sidebar = ({ auth }) => {
     return (
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
-            {/* Brand Logo */}
             <a href={route('home')} className="brand-link">
                 <img
                     src="dist/img/AdminLTELogo.png"
@@ -13,9 +13,7 @@ const Sidebar = ({ auth }) => {
                 />
                 <span className="brand-text font-weight-light">Ryu Gate</span>
             </a>
-            {/* Sidebar */}
             <div className="sidebar">
-                {/* Sidebar user panel (optional) */}
                 <div className="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div className="image">
                         <img
@@ -30,7 +28,6 @@ const Sidebar = ({ auth }) => {
                         </a>
                     </div>
                 </div>
-                {/* Sidebar Menu */}
                 <nav className="mt-2">
                     <ul
                         className="nav nav-pills nav-sidebar flex-column"
@@ -38,21 +35,22 @@ const Sidebar = ({ auth }) => {
                         role="menu"
                         data-accordion="false"
                     >
-                        {/* Add icons to the links using the .nav-icon class
-         with font-awesome or any other icon font library */}
-                        <li className="nav-item menu-open">
-                            <li className="nav-item">
-                                <a href="pages/gallery.html" className="nav-link">
-                                    <i className="nav-icon fas fa-tachometer-alt" />
-                                    <p>Dashboard</p>
-                                </a>
-                            </li>
+                        <li className="nav-item mb-3">
+                            <Link href={route('dashboard')} className="nav-link">
+                                <i className="nav-icon fas fa-tachometer-alt" />
+                                <p>Dashboard</p>
+                            </Link>
+                        </li>
+                        <li className="nav-header">MASTER DATA</li>
+                        <li className="nav-item mb-3">
+                            <Link href="" className="nav-link">
+                                <i className="nav-icon fas fa-table" />
+                                <p>Kelas</p>
+                            </Link>
                         </li>
                     </ul>
                 </nav>
-                {/* /.sidebar-menu */}
             </div>
-            {/* /.sidebar */}
         </aside>
     );
 };
