@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef } from 'react';
 
-export default forwardRef(function TextInput({ type = 'text', className = '', isFocused = false, ...props }, ref) {
+export default forwardRef(function TextInput({ type = 'text', className = '', isFocused = false, isInvalid = false, ...props }, ref) {
     const input = ref ? ref : useRef();
 
     useEffect(() => {
@@ -15,7 +15,7 @@ export default forwardRef(function TextInput({ type = 'text', className = '', is
             type={type}
             className={
                 'form-control ' +
-                className
+                className + ` ${isInvalid ? 'is-invalid' : ''}`
             }
             ref={input}
         />
