@@ -27,7 +27,9 @@ class ClassroomController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Classroom/FormClassroom', [
+            'page_title' => 'Tambah Kelas'
+        ]);
     }
 
     /**
@@ -60,7 +62,10 @@ class ClassroomController extends Controller
      */
     public function edit(Classroom $classroom)
     {
-        //
+        return Inertia::render('Classroom/FormClassroom', [
+            'page_title' => 'Edit Kelas',
+            'classrooms' => $classroom
+        ]);
     }
 
     /**

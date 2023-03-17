@@ -2,6 +2,7 @@ import Navbar from "@/Partials/Navbar";
 import Sidebar from "@/Partials/Sidebar";
 import { Head, Link } from "@inertiajs/react";
 import React from "react";
+import { ToastContainer } from 'react-toastify';
 
 const MainLayout = ({ children, title, auth }) => {
     return (
@@ -19,6 +20,7 @@ const MainLayout = ({ children, title, auth }) => {
                 </strong>
                 All rights reserved.
             </footer>
+            <ToastContainer />
         </div>
     );
 };

@@ -13,7 +13,7 @@ const Classroom = ({ classrooms }) => {
             major: classroom.major,
             action: (
                 <div className="d-flex" style={{ gap: "2px" }}>
-                    <Link className="btn btn-warning btn-sm" href="">
+                    <Link className="btn btn-warning btn-sm" href={route('classrooms.edit', classroom.id)}>
                         Edit
                     </Link>
                     <Link className="btn btn-danger btn-sm" href="">
@@ -45,7 +45,7 @@ const Classroom = ({ classrooms }) => {
                         <div className="card-tools">
                             <Link
                                 className="mr-2 btn btn-primary btn-sm"
-                                href=""
+                                href={route('classrooms.create')}
                             >
                                 Tambah
                             </Link>
