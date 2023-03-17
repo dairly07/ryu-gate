@@ -1,24 +1,38 @@
 import ContentHeader from "@/Components/ContentHeader";
 import DataTable from "@/Components/DataTable";
+import ModalDeleteConfirm from "@/Components/ModalDeleteConfirm";
 import MainLayout from "@/Layouts/MainLayout";
 import Content from "@/Widgets/Content";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const Classroom = ({ classrooms }) => {
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [idClassroom, setIdClassroom] = useState("");
     const data = classrooms.map((classroom) => {
         return {
             name: classroom.name,
             major: classroom.major,
             action: (
                 <div className="d-flex" style={{ gap: "2px" }}>
-                    <Link className="btn btn-warning btn-sm" href={route('classrooms.edit', classroom.id)}>
+                    <Link
+                        className="btn btn-warning btn-sm"
+                        href={route("classrooms.edit", classroom.id)}
+                    >
                         Edit
                     </Link>
-                    <Link className="btn btn-danger btn-sm" href="">
+                    <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => {
+                            setIdClassroom(classroom.id)
+                            setShowDeleteConfirm(true);
+                        }}
+                    >
                         Hapus
-                    </Link>
+                    </Button>
                 </div>
             ),
         };
@@ -45,7 +59,7 @@ const Classroom = ({ classrooms }) => {
                         <div className="card-tools">
                             <Link
                                 className="mr-2 btn btn-primary btn-sm"
-                                href={route('classrooms.create')}
+                                href={route("classrooms.create")}
                             >
                                 Tambah
                             </Link>
@@ -59,6 +73,26 @@ const Classroom = ({ classrooms }) => {
                         />
                     </Card.Body>
                 </Card>
+                <ModalDeleteConfirm
+                    handleClose={() => {
+                        setIdClassroom("");
+                        setShowDeleteConfirm(false);
+                    }}
+                    handleAction={() => {
+                        router.delete(route("classrooms.destroy", idClassroom), {
+                            onSuccess: () => {
+                                toast.success("Kelas berhasil dihapus!");
+                                setIdClassroom("");
+                                router.visit(route("classrooms.index"));
+                            },
+                            onError: (err) => {
+                                toast.error(err.message);
+                                setIdClassroom("");
+                            },
+                        });
+                    }}
+                    show={showDeleteConfirm}
+                />
             </Content>
         </>
     );

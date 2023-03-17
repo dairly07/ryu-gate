@@ -124,6 +124,15 @@ class ClassroomController extends Controller
      */
     public function destroy(Classroom $classroom)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $classroom->delete();
+            DB::commit();
+            return redirect()->back();
+        } catch(\Exception $e) {
+            return redirect()->back()->withErrors([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }
