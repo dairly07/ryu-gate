@@ -27,8 +27,9 @@ const FormClassroom = ({ page_title, classrooms = null }) => {
         if (data.id) {
             put(`/classrooms/${data.id}`, {
                 onSuccess: () => {
-                    reset();
+                    toast.success('Kelas berhasil diedit!');
                     router.visit(route("classrooms.index"));
+                    reset();
                 },
                 onError: (err) => {
                     toast.error(err.message);
@@ -37,8 +38,9 @@ const FormClassroom = ({ page_title, classrooms = null }) => {
         } else {
             post("/classrooms", {
                 onSuccess: () => {
-                    reset();
+                    toast.success('Kelas berhasil ditambahkan!');
                     router.visit(route("classrooms.index"));
+                    reset();
                 },
                 onError: (err) => {
                     toast.error(err.message);
@@ -64,26 +66,32 @@ const FormClassroom = ({ page_title, classrooms = null }) => {
                                     <h3 className="card-title">{page_title}</h3>
                                 </Card.Header>
                                 <Card.Body>
-                                    <InputLabel required>Nama Kelas</InputLabel>
-                                    <TextInput
-                                        id="name"
-                                        name="name"
-                                        type="text"
-                                        onChange={handleChange}
-                                        value={data.name}
-                                    />
-                                    <InputError message={errors.name} />
-                                    <InputLabel required className="mt-2">
-                                        Kompetensi Keahlian
-                                    </InputLabel>
-                                    <TextInput
-                                        id="major"
-                                        name="major"
-                                        type="text"
-                                        onChange={handleChange}
-                                        value={data.major}
-                                    />
-                                    <InputError message={errors.major} />
+                                    <div className="mb-2">
+                                        <InputLabel required>Nama Kelas</InputLabel>
+                                        <TextInput
+                                            id="name"
+                                            name="name"
+                                            type="text"
+                                            onChange={handleChange}
+                                            value={data.name}
+                                            isInvalid={errors.name}
+                                        />
+                                        <InputError message={errors.name} className="my-1"/>
+                                    </div>
+                                    <div className="mb-2">
+                                        <InputLabel required>
+                                            Kompetensi Keahlian
+                                        </InputLabel>
+                                        <TextInput
+                                            id="major"
+                                            name="major"
+                                            type="text"
+                                            onChange={handleChange}
+                                            value={data.major}
+                                            isInvalid={errors.major}
+                                        />
+                                        <InputError message={errors.major} className="my-2"/>
+                                    </div>
                                 </Card.Body>
                                 <Card.Footer>
                                     <Link

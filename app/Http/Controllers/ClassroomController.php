@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class ClassroomController extends Controller
@@ -40,7 +41,26 @@ class ClassroomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'major' => 'required'
+        ], [], [
+            'name' => 'nama kelas',
+            'major' => 'kompetensi keahlian'
+        ]);
+        try {
+            DB::beginTransaction();
+            Classroom::create([
+                'name' => $request->name,
+                'major' => $request->major
+            ]);
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -77,7 +97,23 @@ class ClassroomController extends Controller
      */
     public function update(Request $request, Classroom $classroom)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'major' => 'required'
+        ]);
+        try {
+            DB::beginTransaction();
+            $classroom->update([
+                'name' => $request->name,
+                'major' => $request->major
+            ]);
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
