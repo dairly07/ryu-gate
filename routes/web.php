@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,7 @@ Route::middleware('auth')->group(function() {
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::resource('/classrooms', ClassroomController::class);
+    Route::resource('/students', StudentController::class);
 });
 
 

@@ -35,17 +35,23 @@ const Sidebar = ({ auth }) => {
                         role="menu"
                         data-accordion="false"
                     >
-                        <li className="nav-item mb-3">
+                        <li className="nav-item mb-1">
                             <Link href={route('dashboard')} className="nav-link">
                                 <i className="nav-icon fas fa-tachometer-alt" />
                                 <p>Dashboard</p>
                             </Link>
                         </li>
                         <li className="nav-header">MASTER DATA</li>
-                        <li className="nav-item mb-3">
+                        <li className="nav-item mb-1">
                             <Link href={route('classrooms.index')} className="nav-link">
                                 <i className="nav-icon fas fa-table" />
                                 <p>Kelas</p>
+                            </Link>
+                        </li>
+                        <li className="nav-item mb-1">
+                            <Link href={route('students.index')} className="nav-link">
+                                <i className="nav-icon fas fa-graduation-cap" />
+                                <p>Siswa</p>
                             </Link>
                         </li>
                     </ul>

@@ -1,0 +1,74 @@
+import ContentHeader from "@/Components/ContentHeader";
+import MainLayout from "@/Layouts/MainLayout";
+import Content from "@/Widgets/Content";
+import { Link } from "@inertiajs/react";
+import React from "react";
+import { Card, Pagination } from "react-bootstrap";
+
+const Student = ({ classrooms }) => {
+    return (
+        <>
+            <ContentHeader title="Siswa" />
+            <Content>
+                <div>
+                    <div className="row">
+                        <div className="col-md-4 offset-md-1">
+                            <div className="input-group">
+                                <input
+                                    type="search"
+                                    className="form-control form-control-sm"
+                                    placeholder="Cari kelas..."
+                                />
+                                <div className="input-group-append">
+                                    <button
+                                        type="button"
+                                        className="btn btn-sm btn-default btn-primary"
+                                    >
+                                        <i className="fa fa-search" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-9 offset-md-1">
+                            <hr className="my-3"/>
+                            <div className="row">
+                                {classrooms.map((classroom, i) => (
+                                    <div key={i} className="col-md-3">
+                                        <Card>
+                                            <Card.Body>
+                                                <h4>{classroom.name} {classroom.major}</h4>
+                                                <p>{classroom.student.length} siswa</p>
+                                            </Card.Body>
+                                            <Card.Footer>
+                                                <Link className="text-decoration-none text-dark" href={`/students?clasrooms=${classroom.id}`}>Detail</Link>
+                                            </Card.Footer>
+                                        </Card>
+                                    </div>
+                                ))}
+                            </div>
+                            <hr className="my-3"/>
+                            <div className="d-flex justify-content-end">
+                                <Pagination>
+                                    <Pagination.Item>
+                                        Previous
+                                    </Pagination.Item>
+                                    <Pagination.Item>
+                                        Next
+                                    </Pagination.Item>
+                                </Pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Content>
+        </>
+    );
+};
+
+Student.layout = (page) => (
+    <MainLayout children={page} title="Siswa" auth={page.props.auth} />
+);
+
+export default Student;
