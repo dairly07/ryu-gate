@@ -22,6 +22,13 @@ const Student = ({ classrooms }) => {
         setClassroomsPaginationData(data);
         setPagePagination(totalPage);
     }, []);
+    useEffect(() => {
+        const dataFilter = classrooms.filter((classroom) => [classroom.name, classroom.major].join(" ").toLowerCase().includes(searchQuery.toLowerCase()))
+        const { data, totalPage } = generatePagination(dataFilter, 12);
+        setClassroomsPaginationData(data);
+        setPagePagination(totalPage);
+        setCurrentPage(0);
+    }, [searchQuery])
     return (
         <>
             <ContentHeader title="Siswa" />
@@ -54,8 +61,8 @@ const Student = ({ classrooms }) => {
                         <div className="col-md-9 offset-md-1">
                             <hr className="my-3" />
                             <div className="row">
-                                {classroomsPaginationData[pageCurrent]?.filter((classroom) => [classroom.name, classroom.major].join(" ").toLowerCase().includes(searchQuery.toLowerCase())).length > 0 ? (
-                                    classroomsPaginationData[pageCurrent]?.filter((classroom) => [classroom.name, classroom.major].join(" ").toLowerCase().includes(searchQuery.toLowerCase())).map((classroom, i) => (
+                                {classroomsPaginationData[pageCurrent]?.length > 0 ? (
+                                    classroomsPaginationData[pageCurrent]?.map((classroom, i) => (
                                         <div key={i} className="col-md-3">
                                             <Card>
                                                 <Card.Body>
@@ -84,32 +91,6 @@ const Student = ({ classrooms }) => {
                                         <h4>Kelas tidak ditemukan!</h4>
                                     </div>
                                 )}
-                                {/* {
-                                    classroomsPaginationData[pageCurrent]?.map((classroom, i) => (
-                                        <div key={i} className="col-md-3">
-                                            <Card>
-                                                <Card.Body>
-                                                    <h4>
-                                                        {classroom.name}{" "}
-                                                        {classroom.major}
-                                                    </h4>
-                                                    <p>
-                                                        {classroom.student.length}{" "}
-                                                        siswa
-                                                    </p>
-                                                </Card.Body>
-                                                <Card.Footer>
-                                                    <Link
-                                                        className="text-decoration-none text-dark"
-                                                        href={`/students?clasrooms=${classroom.id}`}
-                                                    >
-                                                        Detail
-                                                    </Link>
-                                                </Card.Footer>
-                                            </Card>
-                                        </div>
-                                    ))
-                                } */}
                             </div>
                             <hr className="my-3" />
                             <div className="d-flex justify-content-end">
