@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import generatePagination from "@/Utils/generatePagination";
 import Table from "react-bootstrap/Table";
-import { Pagination } from "react-bootstrap";
+import { Form, Pagination } from "react-bootstrap";
 
 const DataTable = ({ columns, row, data }) => {
     const [dataTables, setDataTables] = useState([]);
     const [pagePagination, setPagePagination] = useState(0);
     const [pageCurrent, setCurrentPage] = useState(0);
+    const [showEntries, setShowEntries] = useState(10);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const handlePagePrevious = () => {
         setCurrentPage((value) => --value);
@@ -16,12 +18,47 @@ const DataTable = ({ columns, row, data }) => {
     };
 
     useEffect(() => {
-        const pagination = generatePagination(data, 10);
-        setDataTables(pagination.data);
-        setPagePagination(pagination.totalPage);
+        const {data: dataPagination, totalPage} = generatePagination(data, showEntries);
+        setDataTables(dataPagination);
+        setPagePagination(totalPage);
+        setCurrentPage(0);
     }, [data]);
+    useEffect(() => {
+        const dataFilter = data.filter((value) => Object.values(value).join(" ").toLowerCase().includes(searchQuery.toLowerCase()));
+        const {data: dataPagination, totalPage} = generatePagination(dataFilter, showEntries);
+        setDataTables(dataPagination);
+        setPagePagination(totalPage);
+        setCurrentPage(0);
+    }, [searchQuery, showEntries]);
     return (
         <>
+            <div className="d-flex justify-content-between mb-2">
+                <div className="d-flex gap-1">
+                    <p>Show</p>
+                    <div>
+                        <Form.Select size="sm" value={showEntries} onChange={(event) => setShowEntries(event.target.value)}>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </Form.Select>
+                    </div>
+                    <p>entries</p>
+                </div>
+                <div
+                    className="input-group input-group-sm"
+                    style={{ width: 200 }}
+                >
+                    <input
+                        type="text"
+                        name="table_search"
+                        className="form-control float-right"
+                        placeholder="Search"
+                        value={searchQuery}
+                        onChange={(event) => setSearchQuery(event.target.value)}
+                    />
+                </div>
+            </div>
             <Table hover responsive>
                 <thead>
                     <tr className="fw-bold">
