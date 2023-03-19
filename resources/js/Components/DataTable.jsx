@@ -16,7 +16,7 @@ const DataTable = ({ columns, row, data }) => {
     };
 
     useEffect(() => {
-        const pagination = generatePagination(data);
+        const pagination = generatePagination(data, 10);
         setDataTables(pagination.data);
         setPagePagination(pagination.totalPage);
     }, [data]);
