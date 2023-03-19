@@ -1,11 +1,11 @@
-const generatePagination = (data) => {
+const generatePagination = (data, chunk) => {
     const dataMap = []
     let countIteration = 1
     let temp = []
 
     data.forEach((value, i) => {
         temp.push(value)
-        if(countIteration >= 10 || data.length === i+1) {
+        if(countIteration >= chunk || data.length === i+1) {
             dataMap.push(temp)
             temp = []
             countIteration = 1
