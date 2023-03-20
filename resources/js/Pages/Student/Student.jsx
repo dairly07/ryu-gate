@@ -78,7 +78,7 @@ const Student = ({ classrooms }) => {
                                                 <Card.Footer>
                                                     <Link
                                                         className="text-decoration-none text-dark"
-                                                        href={`/students?clasrooms=${classroom.id}`}
+                                                        href={`/students?classroom=${classroom.id}`}
                                                     >
                                                         Detail
                                                     </Link>

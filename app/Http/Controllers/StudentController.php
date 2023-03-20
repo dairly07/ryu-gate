@@ -14,11 +14,20 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('Student/Student', [
-            'classrooms' => Classroom::latest()->with(['student'])->get()
-        ]);
+        if($request->get('classroom')) {
+            $classroom = Classroom::findOrFail($request->get('classroom'));
+            $students = Student::where('classroom_id', $classroom->id)->with(['lateStudent'])->orderBy('nis')->get();
+            return Inertia::render('Student/StudentByClassroom', [
+                'classroom' => $classroom,
+                'students' => $students
+            ]);
+        } else {
+            return Inertia::render('Student/Student', [
+                'classrooms' => Classroom::latest()->with(['student'])->get()
+            ]);
+        }
     }
 
     /**
