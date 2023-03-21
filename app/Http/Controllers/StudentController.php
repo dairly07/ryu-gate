@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class StudentController extends Controller
@@ -52,7 +53,32 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "nis" => "required|unique:students,nis",
+            "name" => "required",
+            "phone" => "required"
+        ], [],
+        [
+            "name" => "Nama siswa",
+            "phone" => "Telepon"
+        ]);
+
+        try {
+            DB::beginTransaction();
+            Student::create([
+                'nis' => $request->nis,
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'classroom_id' => $request->classroom_id
+            ]);
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -91,7 +117,32 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $request->validate([
+            "nis" => "required|unique:students,nis," . $student->id,
+            "name" => "required",
+            "phone" => "required"
+        ], [],
+        [
+            "name" => "Nama siswa",
+            "phone" => "Telepon"
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $student->update([
+                'nis' => $request->nis,
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'classroom_id' => $request->classroom_id
+            ]);
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
