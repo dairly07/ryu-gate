@@ -1,18 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import MainLayout from "@/Layouts/MainLayout";
 import ContentHeader from "@/Components/ContentHeader";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import Checkbox from "@/Components/Checkbox";
 import Content from "@/Widgets/Content";
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import DataTable from "@/Components/DataTable";
+import ModalDeleteConfirm from "@/Components/ModalDeleteConfirm";
+import { toast } from "react-toastify";
 
 const StudentByClassroom = ({ classroom, students }) => {
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [deleteStudents, setDeleteStudents] = useState([]);
+    const handleDelete = () => {
+        router.post(
+            "/students/destroys",
+            {
+                student_id: deleteStudents,
+            },
+            {
+                onSuccess: () => {
+                    toast.success("Siswa berhasil dihapus");
+                    setDeleteStudents([]);
+                    setShowDeleteConfirm(false);
+                    router.visit(`/students?classroom=${classroom.id}`)
+                },
+                onError: (err) => {
+                    toast.error(err.message);
+                    setShowDeleteConfirm(false);
+                },
+            }
+        );
+    };
     const data = students.map((student) => {
         return {
             checkbox: (
                 <div className="text-center">
-                    <Checkbox/>
+                    <Checkbox
+                        onChange={(event) => {
+                            if (event.target.checked) {
+                                setDeleteStudents([
+                                    ...deleteStudents,
+                                    student.id,
+                                ]);
+                            } else {
+                                const filterDeleteStudents =
+                                    deleteStudents.filter(
+                                        (studentId) => studentId !== student.id
+                                    );
+                                setDeleteStudents(filterDeleteStudents);
+                            }
+                        }}
+                    />
                 </div>
             ),
             nis: student.nis,
@@ -24,7 +63,10 @@ const StudentByClassroom = ({ classroom, students }) => {
                     <Link className="btn btn-primary btn-sm" href={""}>
                         Detail
                     </Link>
-                    <Link className="btn btn-warning btn-sm" href={`/students/${student.id}/edit?classroom=${student.classroom_id}`}>
+                    <Link
+                        className="btn btn-warning btn-sm"
+                        href={`/students/${student.id}/edit?classroom=${student.classroom_id}`}
+                    >
                         Edit
                     </Link>
                 </div>
@@ -52,7 +94,7 @@ const StudentByClassroom = ({ classroom, students }) => {
         },
         {
             name: "Aksi",
-            width: "10%"
+            width: "10%",
         },
     ];
     return (
@@ -63,7 +105,9 @@ const StudentByClassroom = ({ classroom, students }) => {
             <Content>
                 <Card>
                     <Card.Header>
-                        <h3 className="card-title">Data Siswa {`${classroom.name} ${classroom.major}`}</h3>
+                        <h3 className="card-title">
+                            Data Siswa {`${classroom.name} ${classroom.major}`}
+                        </h3>
                         <div className="card-tools">
                             <Link
                                 className="mr-2 btn btn-warning btn-sm"
@@ -84,12 +128,14 @@ const StudentByClassroom = ({ classroom, students }) => {
                             >
                                 Ganti Kelas
                             </Link>
-                            <Link
-                                className="mr-2 btn btn-danger btn-sm"
-                                href={route("students.create")}
+                            <Button
+                                variant="danger"
+                                size="sm"
+                                disabled={deleteStudents.length === 0}
+                                onClick={() => setShowDeleteConfirm(true)}
                             >
                                 Delete
-                            </Link>
+                            </Button>
                         </div>
                     </Card.Header>
                     <Card.Body>
@@ -107,6 +153,13 @@ const StudentByClassroom = ({ classroom, students }) => {
                         />
                     </Card.Body>
                 </Card>
+                <ModalDeleteConfirm
+                    handleClose={() => {
+                        setShowDeleteConfirm(false);
+                    }}
+                    handleAction={handleDelete}
+                    show={showDeleteConfirm}
+                />
             </Content>
         </>
     );

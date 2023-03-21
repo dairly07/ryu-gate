@@ -151,8 +151,24 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy($student)
     {
-        //
+        try {
+            DB::beginTransaction();
+            Student::findOrFail($student)->delete();
+            DB::commit();
+        } catch(\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function destroys(Request $request)
+    {
+        foreach ($request->student_id as $student) {
+            $this->destroy($student);
+        }
     }
 }
