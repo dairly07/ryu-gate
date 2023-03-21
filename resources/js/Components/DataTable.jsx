@@ -110,7 +110,7 @@ const DataTable = ({ columns, row, data }) => {
                         Previous
                     </Pagination.Item>
                     <Pagination.Item
-                        disabled={pagePagination === pageCurrent + 1}
+                        disabled={pagePagination === pageCurrent + 1 || pagePagination === 0}
                         onClick={handlePageNext}
                     >
                         Next
