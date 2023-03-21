@@ -57,6 +57,7 @@ class ClassroomController extends Controller
             DB::commit();
             return redirect()->back();
         } catch (\Exception $e) {
+            DB::rollBack();
             return redirect()->back()->withErrors([
                 'message' => $e->getMessage()
             ]);
@@ -110,6 +111,7 @@ class ClassroomController extends Controller
             DB::commit();
             return redirect()->back();
         } catch (\Exception $e) {
+            DB::rollBack();
             return redirect()->back()->withErrors([
                 'message' => $e->getMessage()
             ]);
@@ -130,6 +132,7 @@ class ClassroomController extends Controller
             DB::commit();
             return redirect()->back();
         } catch(\Exception $e) {
+            DB::rollBack();
             return redirect()->back()->withErrors([
                 'message' => $e->getMessage()
             ]);
