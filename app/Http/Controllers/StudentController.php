@@ -35,9 +35,13 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $classroom = Classroom::findOrFail($request->get('classroom'));
+        return Inertia::render('Student/FormStudent', [
+            'page_title' => 'Tambah Siswa Kelas ' . $classroom->name . ' ' . $classroom->major,
+            'classroom' => $classroom->id
+        ]);
     }
 
     /**
@@ -68,9 +72,14 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit(Student $student)
+    public function edit(Student $student, Request $request)
     {
-        //
+        $classroom = Classroom::findOrFail($request->get('classroom'));
+        return Inertia::render('Student/FormStudent', [
+            'page_title' => 'Edit Siswa Kelas ' . $classroom->name . ' ' . $classroom->major,
+            'classroom' => $classroom->id,
+            'student' => $student
+        ]);
     }
 
     /**

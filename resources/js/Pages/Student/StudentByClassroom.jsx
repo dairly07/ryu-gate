@@ -24,7 +24,7 @@ const StudentByClassroom = ({ classroom, students }) => {
                     <Link className="btn btn-primary btn-sm" href={""}>
                         Detail
                     </Link>
-                    <Link className="btn btn-warning btn-sm" href={""}>
+                    <Link className="btn btn-warning btn-sm" href={`/students/${student.id}/edit?classroom=${student.classroom_id}`}>
                         Edit
                     </Link>
                 </div>
@@ -55,7 +55,6 @@ const StudentByClassroom = ({ classroom, students }) => {
             width: "10%"
         },
     ];
-    console.log({ students });
     return (
         <>
             <ContentHeader
@@ -75,7 +74,7 @@ const StudentByClassroom = ({ classroom, students }) => {
                             </Link>
                             <Link
                                 className="mr-2 btn btn-primary btn-sm"
-                                href={route("students.create")}
+                                href={`/students/create?classroom=${classroom.id}`}
                             >
                                 Tambah
                             </Link>
