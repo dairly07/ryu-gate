@@ -18,4 +18,9 @@ class Student extends Model
     {
         return $this->hasMany(LateStudent::class);
     }
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
+    }
 }
