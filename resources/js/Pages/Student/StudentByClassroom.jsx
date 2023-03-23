@@ -8,26 +8,54 @@ import { Button, Card } from "react-bootstrap";
 import DataTable from "@/Components/DataTable";
 import ModalDeleteConfirm from "@/Components/ModalDeleteConfirm";
 import { toast } from "react-toastify";
+import ModalForm from "@/Components/ModalForm";
 
-const StudentByClassroom = ({ classroom, students }) => {
+const StudentByClassroom = ({ classrooms, classroom, students }) => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-    const [deleteStudents, setDeleteStudents] = useState([]);
+    const [showModalFormChangeClassroom, setModalFormChangeClassroom] =
+        useState(false);
+    const [idCheckboxStudents, setIdCheckboxStudents] = useState([]);
+    const [classroomChange, setClassroomChange] = useState("");
     const handleDelete = () => {
         router.post(
             "/students/destroys",
             {
-                student_id: deleteStudents,
+                student_id: idCheckboxStudents,
             },
             {
                 onSuccess: () => {
                     toast.success("Siswa berhasil dihapus");
-                    setDeleteStudents([]);
+                    setIdCheckboxStudents([]);
                     setShowDeleteConfirm(false);
-                    router.visit(`/students?classroom=${classroom.id}`)
+                    router.visit(`/students?classroom=${classroom.id}`);
                 },
                 onError: (err) => {
                     toast.error(err.message);
                     setShowDeleteConfirm(false);
+                },
+            }
+        );
+    };
+    const handleChangeClassroom = (event) => {
+        event.preventDefault();
+        router.post(
+            "/students/change-classroom-students",
+            {
+                student_id: idCheckboxStudents,
+                classroom_id: classroomChange,
+            },
+            {
+                onSuccess: () => {
+                    toast.success("Siswa berhasil ganti kelas");
+                    setIdCheckboxStudents([]);
+                    setModalFormChangeClassroom(false);
+                    setClassroomChange("");
+                    router.visit(`/students?classroom=${classroom.id}`);
+                },
+                onError: (err) => {
+                    toast.error(err.message);
+                    setModalFormChangeClassroom(false);
+                    setClassroomChange("");
                 },
             }
         );
@@ -39,16 +67,16 @@ const StudentByClassroom = ({ classroom, students }) => {
                     <Checkbox
                         onChange={(event) => {
                             if (event.target.checked) {
-                                setDeleteStudents([
-                                    ...deleteStudents,
+                                setIdCheckboxStudents([
+                                    ...idCheckboxStudents,
                                     student.id,
                                 ]);
                             } else {
                                 const filterDeleteStudents =
-                                    deleteStudents.filter(
+                                    idCheckboxStudents.filter(
                                         (studentId) => studentId !== student.id
                                     );
-                                setDeleteStudents(filterDeleteStudents);
+                                setIdCheckboxStudents(filterDeleteStudents);
                             }
                         }}
                     />
@@ -60,7 +88,10 @@ const StudentByClassroom = ({ classroom, students }) => {
             total_late: student.late_student.length,
             action: (
                 <div className="d-flex" style={{ gap: "2px" }}>
-                    <Link className="btn btn-primary btn-sm" href={`/students/${student.id}`}>
+                    <Link
+                        className="btn btn-primary btn-sm"
+                        href={`/students/${student.id}`}
+                    >
                         Detail
                     </Link>
                     <Link
@@ -122,16 +153,21 @@ const StudentByClassroom = ({ classroom, students }) => {
                             >
                                 Tambah
                             </Link>
-                            <Link
-                                className="mr-2 btn btn-warning btn-sm"
-                                href={route("students.create")}
+                            <Button
+                                className="mr-2"
+                                variant="warning"
+                                size="sm"
+                                disabled={idCheckboxStudents.length === 0}
+                                onClick={() =>
+                                    setModalFormChangeClassroom(true)
+                                }
                             >
                                 Ganti Kelas
-                            </Link>
+                            </Button>
                             <Button
                                 variant="danger"
                                 size="sm"
-                                disabled={deleteStudents.length === 0}
+                                disabled={idCheckboxStudents.length === 0}
                                 onClick={() => setShowDeleteConfirm(true)}
                             >
                                 Delete
@@ -153,6 +189,31 @@ const StudentByClassroom = ({ classroom, students }) => {
                         />
                     </Card.Body>
                 </Card>
+                <ModalForm
+                    show={showModalFormChangeClassroom}
+                    handleClose={() => setModalFormChangeClassroom(false)}
+                    title="Ganti Kelas Siswa"
+                    onSubmit={handleChangeClassroom}
+                >
+                    <select
+                        className="form-control"
+                        value={classroomChange}
+                        onChange={(event) =>
+                            setClassroomChange(event.target.value)
+                        }
+                        required
+                    >
+                        <option value="" disabled>
+                            Pilih Kelas
+                        </option>
+                        {classrooms.map((classroom) => (
+                            <option
+                                value={classroom.id}
+                                key={classroom.id}
+                            >{`${classroom.name} ${classroom.major}`}</option>
+                        ))}
+                    </select>
+                </ModalForm>
                 <ModalDeleteConfirm
                     handleClose={() => {
                         setShowDeleteConfirm(false);

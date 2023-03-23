@@ -22,6 +22,7 @@ class StudentController extends Controller
             $students = Student::where('classroom_id', $classroom->id)->with(['lateStudent'])->orderBy('nis')->get();
             return Inertia::render('Student/StudentByClassroom', [
                 'classroom' => $classroom,
+                'classrooms' => Classroom::all(),
                 'students' => $students
             ]);
         } else {
@@ -172,6 +173,25 @@ class StudentController extends Controller
     {
         foreach ($request->student_id as $student) {
             $this->destroy($student);
+        }
+    }
+
+    public function changeClassroomStudent(Request $request)
+    {
+        $request->validate([
+            'classroom_id' => 'required'
+        ]);
+        foreach ($request->student_id as $student) {
+            try {
+                DB::beginTransaction();
+                Student::find($student)->update([ 'classroom_id' => $request->classroom_id ]);
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->back()->withErrors([
+                    'message' => $e->getMessage()
+                ]);
+            }
         }
     }
 }
