@@ -60,7 +60,7 @@ const StudentByClassroom = ({ classroom, students }) => {
             total_late: student.late_student.length,
             action: (
                 <div className="d-flex" style={{ gap: "2px" }}>
-                    <Link className="btn btn-primary btn-sm" href={""}>
+                    <Link className="btn btn-primary btn-sm" href={`/students/${student.id}`}>
                         Detail
                     </Link>
                     <Link

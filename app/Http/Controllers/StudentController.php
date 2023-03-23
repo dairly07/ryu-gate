@@ -89,7 +89,10 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+        return Inertia::render('Student/ShowStudent', [
+            'page_title' => 'Detail Siswa',
+            'student' => $student->load(['classroom', 'lateStudent'])
+        ]);
     }
 
     /**
