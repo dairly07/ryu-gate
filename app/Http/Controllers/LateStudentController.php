@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LateStudent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LateStudentController extends Controller
 {
@@ -80,6 +81,16 @@ class LateStudentController extends Controller
      */
     public function destroy(LateStudent $lateStudent)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $lateStudent->delete();
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

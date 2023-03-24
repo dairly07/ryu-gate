@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import MainLayout from "@/Layouts/MainLayout";
 import ContentHeader from "@/Components/ContentHeader";
 import Content from "@/Widgets/Content";
 import { Button, Card } from "react-bootstrap";
 import DataTable from "@/Components/DataTable";
+import { router } from "@inertiajs/react";
+import { toast } from "react-toastify";
+import ModalDeleteConfirm from "@/Components/ModalDeleteConfirm";
 
 const ShowStudent = ({ student }) => {
-    console.log(student);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [idDeleteDataLate, setIdDeleteDataLate] = useState("");
+    const handleDeleteDataLate = () => {
+        router.delete(`/late-students/${idDeleteDataLate}`, {
+            onSuccess: () => {
+                toast.success("Data Terlambat berhasil dihapus");
+                setShowDeleteConfirm(false);
+                setIdDeleteDataLate("");
+                router.visit(`/students/${student.id}`);
+            },
+            onError: (err) => {
+                toast.error(err.message);
+                setShowDeleteConfirm(false);
+                setIdDeleteDataLate("");
+            },
+        });
+    };
     return (
         <>
             <ContentHeader title={`Detail Siswa ${student.name}`} />
@@ -45,15 +64,28 @@ const ShowStudent = ({ student }) => {
                                         { name: "Waktu Terlambat" },
                                         { name: "Aksi", width: "15%" },
                                     ]}
-                                    row={['date_late', 'time_late', 'action']}
+                                    row={["date_late", "time_late", "action"]}
                                     data={student.late_student.map((late) => {
                                         return {
                                             date_late: late.date_late,
                                             time_late: late.time_late,
                                             action: (
-                                                <Button variant="danger" size="sm">Delete</Button>
-                                            )
-                                        }
+                                                <Button
+                                                    variant="danger"
+                                                    size="sm"
+                                                    onClick={() => {
+                                                        setIdDeleteDataLate(
+                                                            late.id
+                                                        );
+                                                        setShowDeleteConfirm(
+                                                            true
+                                                        );
+                                                    }}
+                                                >
+                                                    Delete
+                                                </Button>
+                                            ),
+                                        };
                                     })}
                                 />
                             </Card.Body>
@@ -61,6 +93,14 @@ const ShowStudent = ({ student }) => {
                     </div>
                 </div>
             </Content>
+            <ModalDeleteConfirm
+                handleClose={() => {
+                    setShowDeleteConfirm(false);
+                    setIdDeleteDataLate("");
+                }}
+                handleAction={handleDeleteDataLate}
+                show={showDeleteConfirm}
+            />
         </>
     );
 };

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\LateStudentController;
 use App\Http\Controllers\PrintPDFController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function() {
     Route::post('/students/destroys', [StudentController::class, 'destroys']);
     Route::resource('/classrooms', ClassroomController::class);
     Route::resource('/students', StudentController::class);
+    Route::resource('/late-students', LateStudentController::class);
 });
 
 
