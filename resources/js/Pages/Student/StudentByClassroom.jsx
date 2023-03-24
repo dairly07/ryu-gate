@@ -140,13 +140,14 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                             Data Siswa {`${classroom.name} ${classroom.major}`}
                         </h3>
                         <div className="card-tools">
-                            <Link
+                            <a
                                 className="mr-2 btn btn-warning btn-sm"
-                                href={route("students.create")}
+                                href={`/print/student-by-classroom/${classroom.id}`}
+                                target="_blank"
                             >
                                 <i className="fas fa-print mr-1"></i>
                                 Cetak PDF
-                            </Link>
+                            </a>
                             <Link
                                 className="mr-2 btn btn-primary btn-sm"
                                 href={`/students/create?classroom=${classroom.id}`}
