@@ -21,14 +21,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($students as $student)
+                    @forelse ($students as $student)
                         <tr>
                             <td>{{ $student->nis }}</td>
                             <td>{{ $student->name }}</td>
                             <td>{{ $student->phone }}</td>
                             <td>{{ count($student->lateStudent) }}</td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center">Tidak ada siswa yang terlambat!</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
