@@ -7,6 +7,7 @@ import DataTable from "@/Components/DataTable";
 import { router } from "@inertiajs/react";
 import { toast } from "react-toastify";
 import ModalDeleteConfirm from "@/Components/ModalDeleteConfirm";
+import moment from "moment";
 
 const ShowStudent = ({ student }) => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -67,7 +68,7 @@ const ShowStudent = ({ student }) => {
                                     row={["date_late", "time_late", "action"]}
                                     data={student.late_student.map((late) => {
                                         return {
-                                            date_late: late.date_late,
+                                            date_late: moment(late.date_late).format('L'),
                                             time_late: late.time_late,
                                             action: (
                                                 <Button
