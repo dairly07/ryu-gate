@@ -5,7 +5,7 @@ import Content from "@/Widgets/Content";
 import { Link } from "@inertiajs/react";
 import { Card } from "react-bootstrap";
 
-const Dashboard = ({ studentCount, classroomCount, lateStudents }) => {
+const Dashboard = ({ studentCount, classroomCount, lateStudents, lateStudentCount, petugasCount }) => {
     return (
         <>
             <ContentHeader title="Dashboard" />
@@ -14,11 +14,11 @@ const Dashboard = ({ studentCount, classroomCount, lateStudents }) => {
                     <div className="col-lg-3 col-6">
                         <div className="small-box bg-info">
                             <div className="inner">
-                                <h3>150</h3>
-                                <p>New Orders</p>
+                                <h3>{lateStudentCount}</h3>
+                                <p>Siswa Terlambat</p>
                             </div>
                             <div className="icon">
-                                <i className="ion ion-bag" />
+                                <i className="fas fa-door-open" />
                             </div>
                             <a href="#" className="small-box-footer">
                                 Detail{" "}
@@ -29,14 +29,11 @@ const Dashboard = ({ studentCount, classroomCount, lateStudents }) => {
                     <div className="col-lg-3 col-6">
                         <div className="small-box bg-success">
                             <div className="inner">
-                                <h3>
-                                    53
-                                    <sup style={{ fontSize: 20 }}>%</sup>
-                                </h3>
-                                <p>Siswa terlambat</p>
+                                <h3>{petugasCount}</h3>
+                                <p>Petugas</p>
                             </div>
                             <div className="icon">
-                                <i className="ion ion-stats-bars" />
+                                <i className="fas fa-users" />
                             </div>
                             <a href="#" className="small-box-footer">
                                 Detail{" "}

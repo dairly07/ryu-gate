@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
@@ -20,6 +21,8 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard', [
             'studentCount' => count(Student::all()),
             'classroomCount' => count(Classroom::all()),
+            'lateStudentCount' => count($lateStudent),
+            'petugasCount' => count(User::where('role', 'petugas')->get()),
             'lateStudents' => $lateStudent->load(['classroom', 'lateStudent' => fn($query) => getQueryDateNow($query)])
         ]);
     }
