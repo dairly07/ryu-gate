@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LateStudentController;
 use App\Http\Controllers\PrintPDFController;
 use App\Http\Controllers\ProfileController;
@@ -30,9 +31,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware('auth')->group(function() {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/print/student-by-classroom/{classroom}', [PrintPDFController::class, 'printStudentByClassroom']);
     Route::post('/students/change-classroom-students', [StudentController::class, 'changeClassroomStudent']);
     Route::post('/students/destroys', [StudentController::class, 'destroys']);
