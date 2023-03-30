@@ -83,7 +83,7 @@ const ShowStudent = ({ student }) => {
                                                         );
                                                     }}
                                                 >
-                                                    Delete
+                                                    Hapus
                                                 </Button>
                                             ),
                                         };

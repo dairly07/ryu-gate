@@ -4,11 +4,11 @@ export default function SuccessButton({
     proccessing,
     children,
     size,
-    type,
+    type = 'button',
     ...props
 }) {
     return (
-        <Button {...props} type={type} size={size} variant="success">
+        <Button {...props} type={type} size={size} variant="success" disabled={proccessing}>
             {children}
         </Button>
     );
