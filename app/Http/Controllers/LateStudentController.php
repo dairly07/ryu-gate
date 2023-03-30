@@ -45,7 +45,32 @@ class LateStudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $request->validate([
+            'student_id' => 'required',
+            'time_late' => 'required',
+            'date_late' => 'required'
+        ], [],
+        [
+            'student_id' => 'Siswa',
+            'late_time' => 'Waktu terlambat'
+        ]);
+
+        try {
+            DB::beginTransaction();
+            LateStudent::create([
+                'student_id' => $request->student_id,
+                'time_late' => $request->time_late,
+                'date_late' => $request->date_late
+            ]);
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
