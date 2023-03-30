@@ -23,6 +23,7 @@
         "bootstrap": "^5.2.3",
         "moment": "^2.29.4",
         "react-bootstrap": "^2.7.2",
+        "react-datepicker": "^4.11.0",
         "react-toastify": "^9.1.1"
     }
 }
