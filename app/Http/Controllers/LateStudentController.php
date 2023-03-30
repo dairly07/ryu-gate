@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom;
 use App\Models\LateStudent;
+use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class LateStudentController extends Controller
 {
@@ -15,7 +19,12 @@ class LateStudentController extends Controller
      */
     public function index()
     {
-        //
+        $lateStudent = Student::whereHas('lateStudent', fn($query) => $query->whereDate('date_late', Carbon::today()))->get();
+        return Inertia::render('StudentLate/StudentLate', [
+            'students' => Student::with('classroom')->get(),
+            'lateStudents' => $lateStudent->load(['classroom', 'lateStudent' => fn($query) => $query->whereDate('date_late', Carbon::today())]),
+            'classrooms' => Classroom::all()
+        ]);
     }
 
     /**

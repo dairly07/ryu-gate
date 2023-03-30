@@ -30,7 +30,7 @@ const Sidebar = ({ auth }) => {
                             </Link>
                         </li>
                         <li className="nav-item mb-1">
-                            <Link href={route('late-students.index')} className={`nav-link ${route().current('lateStudents') ? 'active' : ''}`}>
+                            <Link href={route('late-students.index')} className={`nav-link ${route().current('late-students.*') ? 'active' : ''}`}>
                                 <i className="nav-icon fas fa-door-open" />
                                 <p>Siswa Terlambat</p>
                             </Link>
