@@ -29,6 +29,12 @@ const Sidebar = ({ auth }) => {
                                 <p>Dashboard</p>
                             </Link>
                         </li>
+                        <li className="nav-item mb-1">
+                            <Link href={route('late-students.index')} className={`nav-link ${route().current('lateStudents') ? 'active' : ''}`}>
+                                <i className="nav-icon fas fa-door-open" />
+                                <p>Siswa Terlambat</p>
+                            </Link>
+                        </li>
                         <li className="nav-header">MASTER DATA</li>
                         <li className="nav-item mb-1">
                             <Link href={route('classrooms.index')} className={`nav-link ${route().current('classrooms.*') ? 'active' : ''}`}>
