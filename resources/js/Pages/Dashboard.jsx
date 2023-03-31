@@ -20,10 +20,10 @@ const Dashboard = ({ studentCount, classroomCount, lateStudents, lateStudentCoun
                             <div className="icon">
                                 <i className="fas fa-door-open" />
                             </div>
-                            <a href="#" className="small-box-footer">
+                            <Link href="/late-students" className="small-box-footer">
                                 Detail{" "}
                                 <i className="fas fa-arrow-circle-right" />
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     <div className="col-lg-3 col-6">
@@ -35,10 +35,10 @@ const Dashboard = ({ studentCount, classroomCount, lateStudents, lateStudentCoun
                             <div className="icon">
                                 <i className="fas fa-users" />
                             </div>
-                            <a href="#" className="small-box-footer">
+                            <Link href="/officers" className="small-box-footer">
                                 Detail{" "}
                                 <i className="fas fa-arrow-circle-right" />
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     <div className="col-lg-3 col-6">
