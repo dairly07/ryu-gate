@@ -15,7 +15,7 @@ import { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-const StudentLate = ({ students, lateStudents, classrooms }) => {
+const StudentLate = ({ students, lateStudents, classrooms, auth }) => {
     const { show, handleClose, handleShow } = useModal();
     const [idDeleteDataLate, setIdDeleteDataLate] = useState("");
     const [classroomInput, setClassroomInput] = useState("");
@@ -208,7 +208,8 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
                         <Card>
                             <Card.Header>
                                 <h3 className="card-title">Data Siswa</h3>
-                                <div className="card-tools">
+                                {auth.user.role === 'admin' && (
+                                    <div className="card-tools">
                                     <a
                                         className="mr-2 btn btn-warning btn-sm"
                                         href={`/print/student-lates-by-date-now`}
@@ -218,6 +219,7 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
                                         Cetak PDF
                                     </a>
                                 </div>
+                                )}
                             </Card.Header>
                             <Card.Body>
                                 <DataTable

@@ -31,19 +31,22 @@ Route::get('/', function () {
     }
 })->name('home');
 
-Route::middleware('auth')->group(function() {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware('auth.role:admin')->group(function() {
     Route::get('/print/student-by-classroom/{classroom}', [PrintPDFController::class, 'printStudentByClassroom']);
     Route::get('/print/student-lates-by-date-now', [PrintPDFController::class, 'printLateStudentsByDateNow']);
     Route::post('/students/change-classroom-students', [StudentController::class, 'changeClassroomStudent']);
     Route::post('/students/destroys', [StudentController::class, 'destroys']);
+    Route::resource('/classrooms', ClassroomController::class);
+    Route::resource('/students', StudentController::class);
+    Route::resource('/officers', OfficerController::class);
+});
+
+Route::middleware('auth')->group(function() {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('/classrooms', ClassroomController::class);
-    Route::resource('/students', StudentController::class);
     Route::resource('/late-students', LateStudentController::class);
-    Route::resource('/officers', OfficerController::class);
 });
 
 
