@@ -6,10 +6,11 @@ import SuccessButton from "@/Components/SuccessButton";
 import TextInput from "@/Components/TextInput";
 import MainLayout from "@/Layouts/MainLayout";
 import Content from "@/Widgets/Content";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, router, useForm } from "@inertiajs/react";
 import React from "react";
 import { useEffect } from "react";
 import { Card } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const FormOfficer = ({ page_title, officer = null }) => {
     const { data, setData, errors, clearErrors, reset, processing, post, put } =
@@ -24,6 +25,32 @@ const FormOfficer = ({ page_title, officer = null }) => {
         setData(event.target.name, event.target.value);
         clearErrors(event.target.name);
     };
+    const submit = (event) => {
+        event.preventDefault();
+        if(data.id) {
+            put(`/officers/${data.id}`, {
+                onSuccess: () => {
+                    toast.success('Petugas berhasil diedit!');
+                    router.visit('/officers');
+                    reset()
+                },
+                onError: (err) => {
+                    toast.error(err.message);
+                }
+            })
+        } else {
+            post('/officers', {
+                onSuccess: () => {
+                    toast.success('Petugas berhasil ditambahkan!');
+                    router.visit('/officers');
+                    reset();
+                },
+                onError: (err) => {
+                    toast.error(err.message);
+                }
+            })
+        }
+    }
     useEffect(() => {
         if (officer) {
             const { id, name, code, role } = officer;
@@ -42,7 +69,7 @@ const FormOfficer = ({ page_title, officer = null }) => {
             <Content>
                 <div className="row">
                     <div className="col-md-6 col-12">
-                        <form>
+                        <form onSubmit={submit}>
                             <Card>
                                 <Card.Header>
                                     <h3 className="card-title">{page_title}</h3>
@@ -135,6 +162,7 @@ const FormOfficer = ({ page_title, officer = null }) => {
                                     <SuccessButton
                                         size="sm"
                                         proccessing={processing}
+                                        type="submit"
                                     >
                                         Simpan
                                     </SuccessButton>

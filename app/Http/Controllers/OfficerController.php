@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class OfficerController extends Controller
@@ -40,7 +41,32 @@ class OfficerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'code' => 'required|max:5|unique:users,code',
+            'name' => 'required',
+            'role' => 'required',
+            'password' => 'required|max:12|min:8'
+        ], [], [
+            'code' => 'Petugas code',
+            'name' => 'Nama'
+        ]);
+
+        try {
+            DB::beginTransaction();
+            User::create([
+                'code' => $request->code,
+                'name' => $request->name,
+                'role' => $request->role,
+                'password' => bcrypt($request->password)
+            ]);
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -75,9 +101,37 @@ class OfficerController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'code' => 'required|max:5|unique:users,code,' . $id,
+            'name' => 'required',
+            'role' => 'required',
+            'password' => 'nullable|max:12|min:8'
+        ], [], [
+            'code' => 'Petugas code',
+            'name' => 'Nama'
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $data = [
+                'code' => $request->code,
+                'name' => $request->name,
+                'role' => $request->role,
+            ];
+            if($request->has('password')) {
+                $data['password'] = bcrypt($request->password);
+            }
+            User::findOrFail($id)->update($data);
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
