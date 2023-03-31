@@ -55,6 +55,12 @@ class LateStudentController extends Controller
             'late_time' => 'Waktu terlambat'
         ]);
 
+        if(Student::find($request->student_id)->whereHas('lateStudent', fn($query) => $query->whereDate('date_late', Carbon::today()))->get()) {
+            return redirect()->back()->withErrors([
+                'message' => 'Siswa sudah terdaftar di data siswa terlambat hari ini'
+            ]);
+        }
+
         try {
             DB::beginTransaction();
             LateStudent::create([
