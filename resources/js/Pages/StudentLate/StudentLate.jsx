@@ -180,7 +180,14 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
                                     </div>
                                 </Card.Body>
                                 <Card.Footer>
-                                    <SecondaryButton size="sm" className="mr-1">
+                                    <SecondaryButton
+                                        size="sm"
+                                        className="mr-1"
+                                        onClick={() => {
+                                            reset();
+                                            setClassroomInput("");
+                                        }}
+                                    >
                                         Reset
                                     </SecondaryButton>
                                     <SuccessButton
@@ -226,7 +233,13 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
                                         },
                                         { name: "Aksi", width: "15%" },
                                     ]}
-                                    row={["nis", "name", "classroom", "time_late", "action"]}
+                                    row={[
+                                        "nis",
+                                        "name",
+                                        "classroom",
+                                        "time_late",
+                                        "action",
+                                    ]}
                                     data={data}
                                 />
                             </Card.Body>
