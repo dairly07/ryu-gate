@@ -10,10 +10,10 @@ const Sidebar = ({ auth }) => {
             <div className="sidebar">
                 <div className="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div className="info">
-                        <a href="#" className="d-block">
+                        <Link href="/profile" className="d-block">
                             <i className="fas fa-user-circle text-white mr-2" style={{ fontSize: '1.5rem' }}></i>
                             {auth.user.name}
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <nav className="mt-2">
