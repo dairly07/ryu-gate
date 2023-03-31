@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LateStudentController;
+use App\Http\Controllers\OfficerController;
 use App\Http\Controllers\PrintPDFController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function() {
     Route::resource('/classrooms', ClassroomController::class);
     Route::resource('/students', StudentController::class);
     Route::resource('/late-students', LateStudentController::class);
+    Route::resource('/officers', OfficerController::class);
 });
 
 

@@ -48,6 +48,12 @@ const Sidebar = ({ auth }) => {
                                 <p>Siswa</p>
                             </Link>
                         </li>
+                        <li className="nav-item mb-1">
+                            <Link href={route('officers.index')} className={`nav-link ${route().current('officers.*') ? 'active' : ''}`}>
+                                <i className="nav-icon fas fa-users" />
+                                <p>Petugas</p>
+                            </Link>
+                        </li>
                     </ul>
                 </nav>
             </div>
