@@ -45,7 +45,6 @@ class LateStudentController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'student_id' => 'required',
             'time_late' => 'required',

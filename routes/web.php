@@ -33,6 +33,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/print/student-by-classroom/{classroom}', [PrintPDFController::class, 'printStudentByClassroom']);
+    Route::get('/print/student-lates-by-date-now', [PrintPDFController::class, 'printLateStudentsByDateNow']);
     Route::post('/students/change-classroom-students', [StudentController::class, 'changeClassroomStudent']);
     Route::post('/students/destroys', [StudentController::class, 'destroys']);
     Route::resource('/classrooms', ClassroomController::class);

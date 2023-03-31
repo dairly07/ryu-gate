@@ -28,7 +28,7 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
         post,
     } = useForm({
         student_id: "",
-        date_late: moment().format('YYYY-MM-DD'),
+        date_late: moment().format("YYYY-MM-DD"),
         time_late: "",
     });
     const handleChange = (event) => {
@@ -79,17 +79,17 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
     };
     const submit = (event) => {
         event.preventDefault();
-        post('/late-students', {
+        post("/late-students", {
             onSuccess: () => {
-                toast.success('Data siswa terlambat berhasil ditambahkan');
-                router.visit('/late-students');
+                toast.success("Data siswa terlambat berhasil ditambahkan");
+                router.visit("/late-students");
                 reset();
             },
             onError: (err) => {
                 toast.error(err.message);
-            }
-        })
-    }
+            },
+        });
+    };
     return (
         <>
             <ContentHeader title="Siswa Terlambat Hari Ini" />
@@ -153,7 +153,10 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
                                                         >{`${student.nis} - ${student.name}`}</option>
                                                     ))}
                                             </Form.Select>
-                                            <InputError message={errors.student_id} className="my-1"/>
+                                            <InputError
+                                                message={errors.student_id}
+                                                className="my-1"
+                                            />
                                         </div>
                                         <div className="col-md-4 col-12">
                                             <TextInput
@@ -168,7 +171,10 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
                                                     (event.target.type = "time")
                                                 }
                                             />
-                                            <InputError message={errors.time_late} className="my-1"/>
+                                            <InputError
+                                                message={errors.time_late}
+                                                className="my-1"
+                                            />
                                         </div>
                                     </div>
                                 </Card.Body>
@@ -176,7 +182,11 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
                                     <SecondaryButton size="sm" className="mr-1">
                                         Reset
                                     </SecondaryButton>
-                                    <SuccessButton size="sm" type="submit" proccessing={processing}>
+                                    <SuccessButton
+                                        size="sm"
+                                        type="submit"
+                                        proccessing={processing}
+                                    >
                                         Simpan
                                     </SuccessButton>
                                 </Card.Footer>
@@ -189,6 +199,16 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
                         <Card>
                             <Card.Header>
                                 <h3 className="card-title">Data Siswa</h3>
+                                <div className="card-tools">
+                                    <a
+                                        className="mr-2 btn btn-warning btn-sm"
+                                        href={`/print/student-lates-by-date-now`}
+                                        target="_blank"
+                                    >
+                                        <i className="fas fa-print mr-1"></i>
+                                        Cetak PDF
+                                    </a>
+                                </div>
                             </Card.Header>
                             <Card.Body>
                                 <DataTable
