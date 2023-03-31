@@ -9,11 +9,11 @@ import DataTable from "@/Components/DataTable";
 import ModalDeleteConfirm from "@/Components/ModalDeleteConfirm";
 import { toast } from "react-toastify";
 import ModalForm from "@/Components/ModalForm";
+import useModal from "@/Hooks/useModal";
 
 const StudentByClassroom = ({ classrooms, classroom, students }) => {
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-    const [showModalFormChangeClassroom, setModalFormChangeClassroom] =
-        useState(false);
+    const deleteConfirm = useModal();
+    const formChangeClassroom = useModal();
     const [idCheckboxStudents, setIdCheckboxStudents] = useState([]);
     const [classroomChange, setClassroomChange] = useState("");
     const handleDelete = () => {
@@ -26,12 +26,12 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                 onSuccess: () => {
                     toast.success("Siswa berhasil dihapus");
                     setIdCheckboxStudents([]);
-                    setShowDeleteConfirm(false);
+                    deleteConfirm.handleClose();
                     router.visit(`/students?classroom=${classroom.id}`);
                 },
                 onError: (err) => {
                     toast.error(err.message);
-                    setShowDeleteConfirm(false);
+                    deleteConfirm.handleClose();
                 },
             }
         );
@@ -48,13 +48,13 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                 onSuccess: () => {
                     toast.success("Siswa berhasil ganti kelas");
                     setIdCheckboxStudents([]);
-                    setModalFormChangeClassroom(false);
+                    formChangeClassroom.handleClose();
                     setClassroomChange("");
                     router.visit(`/students?classroom=${classroom.id}`);
                 },
                 onError: (err) => {
                     toast.error(err.message);
-                    setModalFormChangeClassroom(false);
+                    formChangeClassroom.handleClose();
                     setClassroomChange("");
                 },
             }
@@ -159,9 +159,7 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                                 variant="warning"
                                 size="sm"
                                 disabled={idCheckboxStudents.length === 0}
-                                onClick={() =>
-                                    setModalFormChangeClassroom(true)
-                                }
+                                onClick={formChangeClassroom.handleShow}
                             >
                                 Ganti Kelas
                             </Button>
@@ -169,7 +167,7 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                                 variant="danger"
                                 size="sm"
                                 disabled={idCheckboxStudents.length === 0}
-                                onClick={() => setShowDeleteConfirm(true)}
+                                onClick={deleteConfirm.handleShow}
                             >
                                 Delete
                             </Button>
@@ -191,8 +189,8 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                     </Card.Body>
                 </Card>
                 <ModalForm
-                    show={showModalFormChangeClassroom}
-                    handleClose={() => setModalFormChangeClassroom(false)}
+                    show={formChangeClassroom.show}
+                    handleClose={formChangeClassroom.handleClose}
                     title="Ganti Kelas Siswa"
                     onSubmit={handleChangeClassroom}
                 >
@@ -216,11 +214,9 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                     </select>
                 </ModalForm>
                 <ModalDeleteConfirm
-                    handleClose={() => {
-                        setShowDeleteConfirm(false);
-                    }}
+                    handleClose={deleteConfirm.handleClose}
                     handleAction={handleDelete}
-                    show={showDeleteConfirm}
+                    show={deleteConfirm.show}
                 />
             </Content>
         </>

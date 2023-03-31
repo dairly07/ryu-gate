@@ -1,6 +1,7 @@
 import ContentHeader from "@/Components/ContentHeader";
 import DataTable from "@/Components/DataTable";
 import ModalDeleteConfirm from "@/Components/ModalDeleteConfirm";
+import useModal from "@/Hooks/useModal";
 import MainLayout from "@/Layouts/MainLayout";
 import Content from "@/Widgets/Content";
 import { Link, router } from "@inertiajs/react";
@@ -10,7 +11,7 @@ import { Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 const Officer = ({ officers }) => {
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const { show, handleClose, handleShow } = useModal();
     const [idOfficer, setIdOfficer] = useState("");
     return (
         <>
@@ -58,7 +59,7 @@ const Officer = ({ officers }) => {
                                                 size="sm"
                                                 onClick={() => {
                                                     setIdOfficer(officer.id)
-                                                    setShowDeleteConfirm(true)
+                                                    handleShow()
                                                 }}
                                             >
                                                 Hapus
@@ -73,7 +74,7 @@ const Officer = ({ officers }) => {
                 <ModalDeleteConfirm
                     handleClose={() => {
                         setIdOfficer("");
-                        setShowDeleteConfirm(false);
+                        handleClose()
                     }}
                     handleAction={() => {
                         router.delete(route("officers.destroy", idOfficer), {
@@ -88,7 +89,7 @@ const Officer = ({ officers }) => {
                             },
                         });
                     }}
-                    show={showDeleteConfirm}
+                    show={show}
                 />
             </Content>
         </>

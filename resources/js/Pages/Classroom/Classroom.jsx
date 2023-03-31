@@ -1,6 +1,7 @@
 import ContentHeader from "@/Components/ContentHeader";
 import DataTable from "@/Components/DataTable";
 import ModalDeleteConfirm from "@/Components/ModalDeleteConfirm";
+import useModal from "@/Hooks/useModal";
 import MainLayout from "@/Layouts/MainLayout";
 import Content from "@/Widgets/Content";
 import { Link, router } from "@inertiajs/react";
@@ -9,7 +10,7 @@ import { Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 const Classroom = ({ classrooms }) => {
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const { show, handleClose, handleShow } = useModal();
     const [idClassroom, setIdClassroom] = useState("");
     const data = classrooms.map((classroom) => {
         return {
@@ -28,7 +29,7 @@ const Classroom = ({ classrooms }) => {
                         size="sm"
                         onClick={() => {
                             setIdClassroom(classroom.id)
-                            setShowDeleteConfirm(true);
+                            handleShow()
                         }}
                     >
                         Hapus
@@ -76,7 +77,7 @@ const Classroom = ({ classrooms }) => {
                 <ModalDeleteConfirm
                     handleClose={() => {
                         setIdClassroom("");
-                        setShowDeleteConfirm(false);
+                        handleClose()
                     }}
                     handleAction={() => {
                         router.delete(route("classrooms.destroy", idClassroom), {
@@ -91,7 +92,7 @@ const Classroom = ({ classrooms }) => {
                             },
                         });
                     }}
-                    show={showDeleteConfirm}
+                    show={show}
                 />
             </Content>
         </>

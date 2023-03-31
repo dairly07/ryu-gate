@@ -5,6 +5,7 @@ import ModalDeleteConfirm from "@/Components/ModalDeleteConfirm";
 import SecondaryButton from "@/Components/SecondaryButton";
 import SuccessButton from "@/Components/SuccessButton";
 import TextInput from "@/Components/TextInput";
+import useModal from "@/Hooks/useModal";
 import MainLayout from "@/Layouts/MainLayout";
 import Content from "@/Widgets/Content";
 import { Link, router, useForm } from "@inertiajs/react";
@@ -15,7 +16,7 @@ import { Button, Card, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 const StudentLate = ({ students, lateStudents, classrooms }) => {
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const { show, handleClose, handleShow } = useModal();
     const [idDeleteDataLate, setIdDeleteDataLate] = useState("");
     const [classroomInput, setClassroomInput] = useState("");
     const {
@@ -54,7 +55,7 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
                         size="sm"
                         onClick={() => {
                             setIdDeleteDataLate(student.late_student[0].id);
-                            setShowDeleteConfirm(true);
+                            handleShow()
                         }}
                     >
                         Hapus
@@ -67,13 +68,13 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
         router.delete(`/late-students/${idDeleteDataLate}`, {
             onSuccess: () => {
                 toast.success("Data Terlambat berhasil dihapus");
-                setShowDeleteConfirm(false);
+                handleClose()
                 setIdDeleteDataLate("");
                 router.visit(`/late-students`);
             },
             onError: (err) => {
                 toast.error(err.message);
-                setShowDeleteConfirm(false);
+                handleClose()
                 setIdDeleteDataLate("");
             },
         });
@@ -248,10 +249,11 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
                 </div>
                 <ModalDeleteConfirm
                     handleClose={() => {
-                        setShowDeleteConfirm(false);
+                        setIdDeleteDataLate("");
+                        handleClose()
                     }}
                     handleAction={handleDeleteDataLate}
-                    show={showDeleteConfirm}
+                    show={show}
                 />
             </Content>
         </>

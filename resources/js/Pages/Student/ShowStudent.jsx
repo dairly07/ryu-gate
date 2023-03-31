@@ -8,21 +8,22 @@ import { router } from "@inertiajs/react";
 import { toast } from "react-toastify";
 import ModalDeleteConfirm from "@/Components/ModalDeleteConfirm";
 import moment from "moment";
+import useModal from "@/Hooks/useModal";
 
 const ShowStudent = ({ student }) => {
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const { show, handleClose, handleShow } = useModal();
     const [idDeleteDataLate, setIdDeleteDataLate] = useState("");
     const handleDeleteDataLate = () => {
         router.delete(`/late-students/${idDeleteDataLate}`, {
             onSuccess: () => {
                 toast.success("Data Terlambat berhasil dihapus");
-                setShowDeleteConfirm(false);
+                handleClose()
                 setIdDeleteDataLate("");
                 router.visit(`/students/${student.id}`);
             },
             onError: (err) => {
                 toast.error(err.message);
-                setShowDeleteConfirm(false);
+                handleClose()
                 setIdDeleteDataLate("");
             },
         });
@@ -68,7 +69,9 @@ const ShowStudent = ({ student }) => {
                                     row={["date_late", "time_late", "action"]}
                                     data={student.late_student.map((late) => {
                                         return {
-                                            date_late: moment(late.date_late).format('L'),
+                                            date_late: moment(
+                                                late.date_late
+                                            ).format("L"),
                                             time_late: late.time_late,
                                             action: (
                                                 <Button
@@ -78,9 +81,7 @@ const ShowStudent = ({ student }) => {
                                                         setIdDeleteDataLate(
                                                             late.id
                                                         );
-                                                        setShowDeleteConfirm(
-                                                            true
-                                                        );
+                                                        handleShow();
                                                     }}
                                                 >
                                                     Hapus
@@ -96,11 +97,11 @@ const ShowStudent = ({ student }) => {
             </Content>
             <ModalDeleteConfirm
                 handleClose={() => {
-                    setShowDeleteConfirm(false);
+                    handleClose();
                     setIdDeleteDataLate("");
                 }}
                 handleAction={handleDeleteDataLate}
-                show={showDeleteConfirm}
+                show={show}
             />
         </>
     );
