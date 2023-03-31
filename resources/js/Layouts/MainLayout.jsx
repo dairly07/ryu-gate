@@ -18,7 +18,6 @@ const MainLayout = ({ children, title, auth }) => {
                     Copyright © {" "}
                     <Link href={route('home')}>Ryu Gate</Link>.{" "}
                 </strong>
-                All rights reserved.
             </footer>
             <ToastContainer />
         </div>

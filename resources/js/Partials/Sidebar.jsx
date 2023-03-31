@@ -3,7 +3,7 @@ import React from "react";
 
 const Sidebar = ({ auth }) => {
     return (
-        <aside className="main-sidebar sidebar-dark-primary elevation-4">
+        <aside className="main-sidebar sidebar-light-primary elevation-4">
             <a href={route("home")} className="brand-link text-center">
                 <span className="brand-text font-weight-light">Ryu Gate</span>
             </a>
@@ -12,7 +12,7 @@ const Sidebar = ({ auth }) => {
                     <div className="info">
                         <Link href="/profile" className="d-block">
                             <i
-                                className="fas fa-user-circle text-white mr-2"
+                                className="fas fa-user-circle text-dark mr-2"
                                 style={{ fontSize: "1.5rem" }}
                             ></i>
                             {auth.user.name}
