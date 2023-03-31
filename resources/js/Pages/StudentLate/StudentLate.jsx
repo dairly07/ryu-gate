@@ -39,6 +39,7 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
         return {
             nis: student.nis,
             name: student.name,
+            classroom: `${student.classroom.name} ${student.classroom.major}`,
             time_late: student.late_student[0].time_late,
             action: (
                 <div className="d-flex" style={{ gap: "2px" }}>
@@ -216,12 +217,16 @@ const StudentLate = ({ students, lateStudents, classrooms }) => {
                                         { name: "NIS", width: "10%" },
                                         { name: "Nama" },
                                         {
+                                            name: "Kelas",
+                                            width: "15%",
+                                        },
+                                        {
                                             name: "Waktu Terlambat",
-                                            width: "25%",
+                                            width: "20%",
                                         },
                                         { name: "Aksi", width: "15%" },
                                     ]}
-                                    row={["nis", "name", "time_late", "action"]}
+                                    row={["nis", "name", "classroom", "time_late", "action"]}
                                     data={data}
                                 />
                             </Card.Body>
