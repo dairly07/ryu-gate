@@ -140,8 +140,18 @@ class OfficerController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            User::findOrFail($id)->delete();
+            DB::commit();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

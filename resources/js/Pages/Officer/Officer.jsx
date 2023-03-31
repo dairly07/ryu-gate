@@ -1,13 +1,17 @@
 import ContentHeader from "@/Components/ContentHeader";
 import DataTable from "@/Components/DataTable";
+import ModalDeleteConfirm from "@/Components/ModalDeleteConfirm";
 import MainLayout from "@/Layouts/MainLayout";
 import Content from "@/Widgets/Content";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import React from "react";
+import { useState } from "react";
 import { Button, Card } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const Officer = ({ officers }) => {
-    console.log({ officers });
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [idOfficer, setIdOfficer] = useState("");
     return (
         <>
             <ContentHeader title="Petugas" />
@@ -52,7 +56,10 @@ const Officer = ({ officers }) => {
                                             <Button
                                                 variant="danger"
                                                 size="sm"
-                                                onClick={() => {}}
+                                                onClick={() => {
+                                                    setIdOfficer(officer.id)
+                                                    setShowDeleteConfirm(true)
+                                                }}
                                             >
                                                 Hapus
                                             </Button>
@@ -63,6 +70,26 @@ const Officer = ({ officers }) => {
                         />
                     </Card.Body>
                 </Card>
+                <ModalDeleteConfirm
+                    handleClose={() => {
+                        setIdOfficer("");
+                        setShowDeleteConfirm(false);
+                    }}
+                    handleAction={() => {
+                        router.delete(route("officers.destroy", idOfficer), {
+                            onSuccess: () => {
+                                toast.success("Petugas berhasil dihapus!");
+                                setIdOfficer("");
+                                router.visit(route("officers.index"));
+                            },
+                            onError: (err) => {
+                                toast.error(err.message);
+                                setIdOfficer("");
+                            },
+                        });
+                    }}
+                    show={showDeleteConfirm}
+                />
             </Content>
         </>
     );
