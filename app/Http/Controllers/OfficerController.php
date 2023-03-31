@@ -27,7 +27,9 @@ class OfficerController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Officer/FormOfficer', [
+            'page_title' => 'Tambah Petugas'
+        ]);
     }
 
     /**
@@ -58,9 +60,12 @@ class OfficerController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        return Inertia::render('Officer/FormOfficer', [
+            'page_title' => 'Edit Petugas',
+            'officer' => User::findOrFail($id)
+        ]);
     }
 
     /**

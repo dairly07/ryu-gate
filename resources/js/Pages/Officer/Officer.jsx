@@ -15,6 +15,14 @@ const Officer = ({ officers }) => {
                 <Card>
                     <Card.Header>
                         <h3 className="card-title">Data Petugas</h3>
+                        <div className="card-tools">
+                            <Link
+                                className="mr-2 btn btn-primary btn-sm"
+                                href={route("officers.create")}
+                            >
+                                Tambah
+                            </Link>
+                        </div>
                     </Card.Header>
                     <Card.Body>
                         <DataTable
@@ -37,7 +45,7 @@ const Officer = ({ officers }) => {
                                         >
                                             <Link
                                                 className="btn btn-warning btn-sm"
-                                                href={``}
+                                                href={route('officers.edit', officer.id)}
                                             >
                                                 Edit
                                             </Link>
