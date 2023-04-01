@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import React from "react";
 
 const Navbar = () => {
@@ -20,14 +20,13 @@ const Navbar = () => {
             {/* Right navbar links */}
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <Link
+                    <div
                         className="nav-link"
-                        href={route('logout')}
-                        method="post"
-                        role="button"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => router.post(route('logout'))}
                     >
                         <i className="fas fa-sign-out-alt" />
-                    </Link>
+                    </div>
                 </li>
             </ul>
         </nav>

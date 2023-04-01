@@ -112,11 +112,6 @@ const Login = ({ status, canResetPassword }) => {
                                 {/* /.col */}
                             </div>
                         </form>
-                        <p className="mb-1">
-                            <Link href={route("password.request")}>
-                                I forgot my password
-                            </Link>
-                        </p>
                     </div>
                     {/* /.login-card-body */}
                 </div>
