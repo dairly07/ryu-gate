@@ -101,6 +101,9 @@ class ClassroomController extends Controller
         $request->validate([
             'name' => 'required',
             'major' => 'required'
+        ], [], [
+            'name' => 'nama kelas',
+            'major' => 'kompetensi keahlian'
         ]);
         try {
             DB::beginTransaction();
