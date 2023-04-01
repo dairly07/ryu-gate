@@ -17,6 +17,9 @@ class RoleOfficer
      */
     public function handle(Request $request, Closure $next, $role)
     {
+        if(!Auth::check()) {
+            return redirect('/login');
+        }
         if(Auth::user()->role == $role) {
             return $next($request);
         } else {
