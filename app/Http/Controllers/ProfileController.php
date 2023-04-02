@@ -38,7 +38,7 @@ class ProfileController extends Controller
         ]);
 
         $data = ['name' => $validated['name']];
-        if($request->has('password')) {
+        if(!is_null($request->password)) {
             $data['password'] = Hash::make($validated['password']);
         }
 
