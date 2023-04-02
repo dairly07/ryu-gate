@@ -121,6 +121,7 @@ const FormStudent = ({ page_title, classroom, student = null }) => {
                                     <SuccessButton
                                         size="sm"
                                         proccessing={processing}
+                                        type="submit"
                                     >
                                         Simpan
                                     </SuccessButton>
