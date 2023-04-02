@@ -180,6 +180,8 @@ class StudentController extends Controller
     {
         $request->validate([
             'classroom_id' => 'required'
+        ], [], [
+            'classroom_id' => 'Kelas'
         ]);
         foreach ($request->student_id as $student) {
             try {
