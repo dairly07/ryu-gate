@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\StudentImport;
 use App\Models\Classroom;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -195,5 +197,16 @@ class StudentController extends Controller
                 ]);
             }
         }
+    }
+
+    public function importExcel(Request $request)
+    {
+        $data = $request->file('file');
+
+        $nameFile = $data->getClientOriginalName();
+        $data->move('StudentData', $nameFile);
+
+        Excel::import(new StudentImport, public_path('/StudentData/' . $nameFile));
+        return redirect()->back();
     }
 }

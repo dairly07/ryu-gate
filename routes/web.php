@@ -36,6 +36,7 @@ Route::middleware('auth.role:admin')->group(function() {
     Route::get('/print/student-lates-by-date-now', [PrintPDFController::class, 'printLateStudentsByDateNow']);
     Route::post('/students/change-classroom-students', [StudentController::class, 'changeClassroomStudent']);
     Route::post('/students/destroys', [StudentController::class, 'destroys']);
+    Route::post('/students/importexcel', [StudentController::class, 'importExcel']);
     Route::resource('/classrooms', ClassroomController::class);
     Route::resource('/students', StudentController::class);
     Route::resource('/officers', OfficerController::class);

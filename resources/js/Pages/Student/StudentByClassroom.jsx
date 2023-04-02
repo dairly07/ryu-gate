@@ -14,8 +14,10 @@ import useModal from "@/Hooks/useModal";
 const StudentByClassroom = ({ classrooms, classroom, students }) => {
     const deleteConfirm = useModal();
     const formChangeClassroom = useModal();
+    const formImportExcel = useModal();
     const [idCheckboxStudents, setIdCheckboxStudents] = useState([]);
     const [classroomChange, setClassroomChange] = useState("");
+    const [excelFile, setExcelFile] = useState(null);
     const handleDelete = () => {
         router.post(
             "/students/destroys",
@@ -60,6 +62,23 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
             }
         );
     };
+    const handleImportExcel = (event) => {
+        event.preventDefault();
+
+        router.post('/students/importexcel', {
+            'file': excelFile
+        }, {
+            onSuccess: () => {
+                toast.success('Import data siswa berhasil!');
+                formImportExcel.handleClose();
+                setExcelFile(null);
+                router.visit(`/students?classroom=${classroom.id}`);
+            },
+            onError: () => {
+                toast.success('Import data siswa berhasil!');
+            }
+        });
+    }
     const data = students.map((student) => {
         return {
             checkbox: (
@@ -140,6 +159,15 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                             Data Siswa {`${classroom.name} ${classroom.major}`}
                         </h3>
                         <div className="card-tools">
+                            <Button
+                                className="mr-2"
+                                variant="warning"
+                                size="sm"
+                                onClick={formImportExcel.handleShow}
+                            >
+                                <i className="fas fa-print mr-1"></i>
+                                Import Excel
+                            </Button>
                             <a
                                 className="mr-2 btn btn-warning btn-sm"
                                 href={`/print/student-by-classroom/${classroom.id}`}
@@ -148,12 +176,6 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                                 <i className="fas fa-print mr-1"></i>
                                 Cetak PDF
                             </a>
-                            <Link
-                                className="mr-2 btn btn-primary btn-sm"
-                                href={`/students/create?classroom=${classroom.id}`}
-                            >
-                                Tambah
-                            </Link>
                             <Button
                                 className="mr-2"
                                 variant="warning"
@@ -163,6 +185,12 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                             >
                                 Ganti Kelas
                             </Button>
+                            <Link
+                                className="mr-2 btn btn-primary btn-sm"
+                                href={`/students/create?classroom=${classroom.id}`}
+                            >
+                                Tambah
+                            </Link>
                             <Button
                                 variant="danger"
                                 size="sm"
@@ -212,6 +240,34 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                             >{`${classroom.name} ${classroom.major}`}</option>
                         ))}
                     </select>
+                </ModalForm>
+                <ModalForm
+                    show={formImportExcel.show}
+                    handleClose={formImportExcel.handleClose}
+                    title="Import Data Excel"
+                    onSubmit={handleImportExcel}
+                >
+                    <div className="form-group">
+                        <div className="input-group">
+                            <div className="custom-file">
+                                <input
+                                    type="file"
+                                    className="custom-file-input"
+                                    id="excelInput"
+                                    onChange={(event) => setExcelFile(event.target.files[0])}
+                                />
+                                <label
+                                    className="custom-file-label"
+                                    htmlFor="excelInput"
+                                >
+                                    Choose file
+                                </label>
+                            </div>
+                            <div className="input-group-append">
+                                <span className="input-group-text">Upload</span>
+                            </div>
+                        </div>
+                    </div>
                 </ModalForm>
                 <ModalDeleteConfirm
                     handleClose={deleteConfirm.handleClose}
