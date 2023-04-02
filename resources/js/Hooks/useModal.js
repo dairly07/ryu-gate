@@ -3,14 +3,12 @@ import { useState } from "react";
 const useModal = (initialValue = false) => {
     const [show, setShow] = useState(initialValue);
 
-    const handleClose = (callback = () => {}) => {
+    const handleClose = () => {
         setShow(false);
-        callback();
     }
 
-    const handleShow = (callback = () => {}) => {
+    const handleShow = () => {
         setShow(true)
-        callback()
     }
 
     return { show, handleClose, handleShow }
