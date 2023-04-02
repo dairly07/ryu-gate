@@ -44,12 +44,14 @@ const StudentLate = ({ students, lateStudents, classrooms, auth }) => {
             time_late: student.late_student[0].time_late,
             action: (
                 <div className="d-flex" style={{ gap: "2px" }}>
-                    <Link
-                        className="btn btn-primary btn-sm"
-                        href={`/students/${student.id}`}
-                    >
-                        Detail
-                    </Link>
+                    {auth.user.role === 'admin' && (
+                        <Link
+                            className="btn btn-primary btn-sm"
+                            href={`/students/${student.id}`}
+                        >
+                            Detail
+                        </Link>
+                    )}
                     <Button
                         variant="danger"
                         size="sm"
