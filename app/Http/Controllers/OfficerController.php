@@ -143,9 +143,10 @@ class OfficerController extends Controller
      */
     public function destroy($id)
     {
+        $user = User::findOrFail($id);
         try {
             DB::beginTransaction();
-            User::findOrFail($id)->delete();
+            $user->delete();
             DB::commit();
             return redirect()->back();
         } catch (\Exception $e) {
