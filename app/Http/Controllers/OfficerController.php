@@ -45,7 +45,6 @@ class OfficerController extends Controller
         $request->validate([
             'code' => 'required|max:5|unique:users,code',
             'name' => 'required',
-            'role' => 'required',
             'password' => 'required|max:12|min:8'
         ], [], [
             'code' => 'Petugas code',
@@ -107,7 +106,6 @@ class OfficerController extends Controller
         $request->validate([
             'code' => 'required|max:5|unique:users,code,' . $id,
             'name' => 'required',
-            'role' => 'required',
             'password' => 'nullable|max:12|min:8'
         ], [], [
             'code' => 'Petugas code',
