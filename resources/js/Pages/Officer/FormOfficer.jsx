@@ -18,7 +18,7 @@ const FormOfficer = ({ page_title, officer = null }) => {
             id: "",
             name: "",
             code: "",
-            role: "",
+            role: "petugas",
             password: "",
         });
     const handleChange = (event) => {
@@ -142,7 +142,7 @@ const FormOfficer = ({ page_title, officer = null }) => {
                                                         )
                                                 }
                                             />
-                                            <InputLabel required>
+                                            <InputLabel>
                                                 admin?
                                             </InputLabel>
                                         </div>
