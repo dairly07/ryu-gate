@@ -260,7 +260,7 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                                     className="custom-file-label"
                                     htmlFor="excelInput"
                                 >
-                                    Choose file
+                                    {excelFile ? excelFile.name : 'Choose file'}
                                 </label>
                             </div>
                             <div className="input-group-append">
