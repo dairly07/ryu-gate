@@ -32,7 +32,7 @@ const DataTable = ({ columns, row, data }) => {
     }, [searchQuery, showEntries]);
     return (
         <>
-            <div className="d-flex justify-content-between mb-2">
+            <div className="d-md-flex justify-content-between mb-2">
                 <div className="d-flex gap-1">
                     <p>Show</p>
                     <div>

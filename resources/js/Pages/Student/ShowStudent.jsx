@@ -17,13 +17,13 @@ const ShowStudent = ({ student }) => {
         router.delete(`/late-students/${idDeleteDataLate}`, {
             onSuccess: () => {
                 toast.success("Data Terlambat berhasil dihapus");
-                handleClose()
+                handleClose();
                 setIdDeleteDataLate("");
                 router.visit(`/students/${student.id}`);
             },
             onError: (err) => {
                 toast.error(err.message);
-                handleClose()
+                handleClose();
                 setIdDeleteDataLate("");
             },
         });
@@ -37,21 +37,23 @@ const ShowStudent = ({ student }) => {
                         <Card>
                             <Card.Header>Biodata Siswa</Card.Header>
                             <Card.Body>
-                                <div className="mb-3 lh-1">
-                                    <p className="fw-bold">NIS</p>
-                                    <p>{student.nis}</p>
-                                </div>
-                                <div className="mb-3 lh-1">
-                                    <p className="fw-bold">Nama</p>
-                                    <p>{student.name}</p>
-                                </div>
-                                <div className="mb-3 lh-1">
-                                    <p className="fw-bold">Kelas</p>
-                                    <p>{`${student.classroom.name} ${student.classroom.major}`}</p>
-                                </div>
-                                <div className="mb-3 lh-1">
-                                    <p className="fw-bold">Telepon</p>
-                                    <p>{student.phone}</p>
+                                <div className="row">
+                                    <div className="col-md-12 col-6 lh-1">
+                                        <p className="fw-bold">NIS</p>
+                                        <p>{student.nis}</p>
+                                    </div>
+                                    <div className="col-md-12 col-6 lh-1">
+                                        <p className="fw-bold">Nama</p>
+                                        <p>{student.name}</p>
+                                    </div>
+                                    <div className="col-md-12 col-6 lh-1">
+                                        <p className="fw-bold">Kelas</p>
+                                        <p>{`${student.classroom.name} ${student.classroom.major}`}</p>
+                                    </div>
+                                    <div className="col-md-12 col-6 lh-1">
+                                        <p className="fw-bold">Telepon</p>
+                                        <p>{student.phone}</p>
+                                    </div>
                                 </div>
                             </Card.Body>
                         </Card>

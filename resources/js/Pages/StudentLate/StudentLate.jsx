@@ -109,7 +109,7 @@ const StudentLate = ({ students, lateStudents, classrooms, auth }) => {
                                 </Card.Header>
                                 <Card.Body>
                                     <div className="row">
-                                        <div className="col-md-4 col-12">
+                                        <div className="col-md-4 col-12 mb-md-0 mb-2">
                                             <Form.Select
                                                 value={classroomInput}
                                                 onChange={(event) =>
@@ -129,7 +129,7 @@ const StudentLate = ({ students, lateStudents, classrooms, auth }) => {
                                                 ))}
                                             </Form.Select>
                                         </div>
-                                        <div className="col-md-4 col-12">
+                                        <div className="col-md-4 col-12 mb-md-0 mb-2">
                                             <Form.Select
                                                 disabled={
                                                     classroomInput
@@ -162,7 +162,7 @@ const StudentLate = ({ students, lateStudents, classrooms, auth }) => {
                                                 className="my-1"
                                             />
                                         </div>
-                                        <div className="col-md-4 col-12">
+                                        <div className="col-md-4 col-12 mb-md-0 mb-2">
                                             <TextInput
                                                 id="time_late"
                                                 name="time_late"

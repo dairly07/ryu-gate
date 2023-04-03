@@ -160,7 +160,7 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                         </h3>
                         <div className="card-tools">
                             <Button
-                                className="mr-2"
+                                className="mr-2 mb-md-0 mb-2"
                                 variant="warning"
                                 size="sm"
                                 onClick={formImportExcel.handleShow}
@@ -169,7 +169,7 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                                 Import Excel
                             </Button>
                             <a
-                                className="mr-2 btn btn-warning btn-sm"
+                                className="mr-2 btn btn-warning btn-sm mb-md-0 mb-2"
                                 href={`/print/student-by-classroom/${classroom.id}`}
                                 target="_blank"
                             >
@@ -177,7 +177,7 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                                 Cetak PDF
                             </a>
                             <Button
-                                className="mr-2"
+                                className="mr-2 mb-md-0 mb-2"
                                 variant="warning"
                                 size="sm"
                                 disabled={idCheckboxStudents.length === 0}
@@ -186,12 +186,13 @@ const StudentByClassroom = ({ classrooms, classroom, students }) => {
                                 Ganti Kelas
                             </Button>
                             <Link
-                                className="mr-2 btn btn-primary btn-sm"
+                                className="mr-2 btn btn-primary btn-sm mb-md-0 mb-2"
                                 href={`/students/create?classroom=${classroom.id}`}
                             >
                                 Tambah
                             </Link>
                             <Button
+                                className="mb-md-0 mb-2"
                                 variant="danger"
                                 size="sm"
                                 disabled={idCheckboxStudents.length === 0}
